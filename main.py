@@ -3,6 +3,7 @@ import random, arff, sys, pandas as pd
 from sklearn import metrics
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.model_selection import GroupShuffleSplit
+import tensorflow as tf
 from functools import reduce
 
 from config import get_extractor, get_classifier, get_sampler
@@ -12,17 +13,49 @@ from pipeline.loader.arff_loader import ArffLoader
 
 random.seed(42)
 
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.6
+
+gpus = tf.config.experimental.list_physical_devices('GPU')
+
+config.gpu_options.allow_growth = True
+session = tf.compat.v1.InteractiveSession(config=config)
+
+
+if gpus:
+    try:
+        tf.config.experimental.set_virtual_device_configuration(gpus[0],[tf.config.experimental.VirtualDeviceConfiguration(memory_limit=(1024 * 4))])
+        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+
+    except RuntimeError as e:
+        print(e)
+
+device_name = tf.test.gpu_device_name()
+
+if device_name != '/device:GPU:0':
+    print('ATENTION: GPU device not found. CPU will be used!')
+else:
+    print('Found GPU at: {}'.format(device_name))
+
 def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
-    (extractor, features, nfeatures, max_features) = get_extractor(
-            extractor_name, class_attr)
+    print("[INFO] main...")
+    (extractor, features, nfeatures, max_features) = get_extractor(extractor_name, class_attr)
     sampler = get_sampler(sampler_name)
 
     print('running --- %s-%s...' % (extractor_name, class_attr))
 
-    extractor_pipeline = Pipeline([
-        ArffLoader(), XBIExtractor(features, class_attr), extractor ])
-    data = extractor_pipeline.execute(open(
-        '%s/data/19112021/dataset.classified.hist.img.%s.arff' % (path, class_attr)).read())
+    extractor_pipeline = Pipeline([ArffLoader(), XBIExtractor(features, class_attr), extractor])
+
+    file_name = '%s/data/danilo/dataset.32x32.%s.arff' % (path, class_attr)
+
+    old_file = '%s/data/19112021/dataset.classified.hist.img.%s.arff' % (path, class_attr)
+
+    print('[INFO] dataset: %s ' % old_file)
+
+    data = extractor_pipeline.execute(open(file_name).read())
+
+
     X, y, attributes, features = data['X'], data['y'], [ attr[0] for attr in data['attributes'] ], data['features']
     groups = list(data['data'][:, attributes.index('URL')])
 
@@ -31,7 +64,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     cache = {}
 
-    for classifier_name in ['svm', 'nn', 'dt', 'randomforest']:
+    for classifier_name in ['cnn']: #['svm', 'nn', 'dt', 'randomforest']:
         rankings, fscore, precision, recall, roc, train_fscore = [], [], [], [], [], []
         approach = '%s-%s-%s' % (extractor_name, classifier_name, class_attr)
         print('running --- %s...' % (approach))
@@ -48,8 +81,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             else:
                 print('Running sampling strategy...')
                 X_samp, y_samp = sampler.fit_resample(X_train, y_train)
-                groups_samp = [
-                        groups_train[X_train.tolist().index(row)] for row in X_samp.tolist() ]
+                groups_samp = [groups_train[X_train.tolist().index(row)] for row in X_samp.tolist() ]
                 cache[ind] = (X_samp, y_samp, groups_samp)
 
             print('Model trainning with: X (%s)' % (str(X_samp.shape)))
@@ -144,11 +176,11 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 4, 'The script requires 3 parameters: feature extractor (browserbite|crosscheck|browserninja1|browserninja2), type of xbi (internal|external) and sampler strategy (none|tomek|near|repeated|rule|random)'
+    #assert len(sys.argv) == 4, 'The script requires 3 parameters: feature extractor (browserbite|crosscheck|browserninja1|browserninja2|cnn), type of xbi (internal|external) and sampler strategy (none|tomek|near|repeated|rule|random)'
 
-    extractor_name = sys.argv[1]
-    class_attr = sys.argv[2]
-    sampler_name = sys.argv[3]
+    extractor_name = 'image_diff_extractor' #sys.argv[1]
+    class_attr = 'internal' #sys.argv[2]
+    sampler_name = 'none' #sys.argv[3]
     n_splits = 24
 
     main(extractor_name, class_attr, sampler_name, n_splits)

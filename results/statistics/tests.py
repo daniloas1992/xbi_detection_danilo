@@ -5,7 +5,7 @@ from scipy import stats
 
 
 def run_tests(df):
-    strategies = ['browserbite', 'crosscheck', 'browserninja1', 'browserninja2']
+    strategies = ['browserbite', 'crosscheck', 'browserninja1', 'browserninja2', 'cnn']
     algs = ['dt', 'randomforest', 'svm', 'nn']
 
     is_parametric = True

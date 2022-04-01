@@ -111,6 +111,7 @@ class PositionViewportExtractor():
 class PlatformExtractor():
 
     def execute(self, arff_data, attributes, X):
+        print('[INFO] PlatformExtractor...')
         encoder = LabelEncoder()
         encoder.fit(arff_data['data'][:, attributes.index('targetPlatform')])
         X.append(encoder.transform(arff_data['data'][:, attributes.index('targetPlatform')]))

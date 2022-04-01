@@ -6,15 +6,20 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV,GroupShuffleSplit
 from sklearn.pipeline import Pipeline as Pipe
 from sklearn.preprocessing import StandardScaler
+from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 
+from classifier.classifier_cnn import get_params_grid, model_function
 from pipeline.extractor.crosscheck_extractor import CrossCheckExtractor
 from pipeline.extractor.browserbite_extractor import BrowserbiteExtractor
 from pipeline.extractor.browserninja import *
 from pipeline.extractor.browserninja.font_family_extractor import FontFamilyExtractor
 from pipeline.extractor.browserninja.image_moments_extractor import ImageMomentsExtractor
 from pipeline.extractor.browserninja.relative_position_extractor import RelativePositionExtractor
+from pipeline.extractor.image_diff_extractor import ImageDiffExtractor
+
 
 def get_extractor(name, class_attr):
+    print("[INFO] extractor...")
     features = []
     max_features = []
     nfeatures=[]
@@ -22,10 +27,13 @@ def get_extractor(name, class_attr):
     extractors = []
 
     if name == 'browserbite':
+        print("[INFO] extractor browserbite...")
         extractor = BrowserbiteExtractor(class_attr)
     elif name == 'crosscheck':
+        print("[INFO] extractor crosscheck...")
         extractor = CrossCheckExtractor(class_attr)
     elif name == 'browserninja1':
+        print("[INFO] extractor browserninja1...")
         if (class_attr == 'internal'):
             extractors = [
                     ComplexityExtractor(),
@@ -44,6 +52,7 @@ def get_extractor(name, class_attr):
         extractor = BrowserNinjaCompositeExtractor(class_attr,
             extractors=extractors)
     elif name == 'browserninja2':
+        print("[INFO] extractor browserninja2...")
         max_features = [5, 10, 15]
         nfeatures = [5, 10, 15]
         extractors = []
@@ -79,6 +88,9 @@ def get_extractor(name, class_attr):
             ]
         extractor = BrowserNinjaCompositeExtractor(class_attr,
             extractors=extractors)
+    elif name == 'image_diff_extractor':
+        print("[INFO] extractor image_diff...")
+        extractor = ImageDiffExtractor(class_attr)
 
     return (extractor, features, nfeatures, max_features)
 
@@ -121,6 +133,21 @@ def get_classifier(classifier_name, nfeatures, max_features):
                 'classifier__max_features': ['auto'], # max_features + ['auto'],
             }, cv=GroupShuffleSplit(n_splits=2, random_state=42),
             scoring='f1', error_score=0, verbose=0)
+
+    elif classifier_name == 'cnn':
+        print('[INFO] CNN classifier...')
+        #cnn = CnnClassifier(32)
+
+        model = Pipe([
+            ('preprocessor', StandardScaler()),
+            ('selector', SelectKBest(f_classif)),
+            ('classifier', KerasClassifier(build_fn=model_function(), verbose=1))])
+
+        classifier = GridSearchCV(estimator=model,
+                                  param_grid=get_params_grid(),
+                                  cv=GroupShuffleSplit(n_splits=2, random_state=42),
+                                  scoring='f1', error_score=0, verbose=0)
+
     elif classifier_name == 'svm':
         #model = Pipe([
         #    ('selector', SelectKBest(f_classif)),

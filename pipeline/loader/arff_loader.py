@@ -6,6 +6,7 @@ class ArffLoader():
         pass
 
     def execute(self, data):
+        print('[INFO] ArffLoader...')
         result = arff.load(data)
         result['data'] = np.array(result['data'])
         return result
