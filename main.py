@@ -49,15 +49,17 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     file_name = '%s/data/danilo/dataset.32x32.%s.arff' % (path, class_attr)
 
-    old_file = '%s/data/19112021/dataset.classified.hist.img.%s.arff' % (path, class_attr)
+    #old_file = '%s/data/19112021/dataset.classified.hist.img.%s.arff' % (path, class_attr)
 
-    print('[INFO] dataset: %s ' % old_file)
+    print('[INFO] dataset: %s ' % file_name)
 
     data = extractor_pipeline.execute(open(file_name).read())
 
-
     X, y, attributes, features = data['X'], data['y'], [ attr[0] for attr in data['attributes'] ], data['features']
     groups = list(data['data'][:, attributes.index('URL')])
+
+    X = X.reshape((X.shape[0], 32, 32, 1))
+    print('reshape data ...')
 
     print('data extracted...')
     cv = GroupShuffleSplit(n_splits=n_splits, random_state=42)
@@ -68,23 +70,33 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
         rankings, fscore, precision, recall, roc, train_fscore = [], [], [], [], [], []
         approach = '%s-%s-%s' % (extractor_name, classifier_name, class_attr)
         print('running --- %s...' % (approach))
-        gridsearch = get_classifier(classifier_name, nfeatures, max_features)
+        #gridsearch = get_classifier(classifier_name, nfeatures, max_features)
 
         for ind, (train_index, test_index) in enumerate(cv.split(X, y, groups)):
             X_train, X_test = X[train_index], X[test_index]
             y_train, y_test = y[train_index], y[test_index]
             groups_train = [i for i in groups if groups.index(i) in train_index]
 
+            input_shape = (X_train.shape[1],)
+            print("Input shape 1: {}".format(str((input_shape))))
+
+            gridsearch = get_classifier(classifier_name, nfeatures, max_features, input_shape)
+
             if ind in cache:
                 print('Sample recovered from cache...')
                 (X_samp, y_samp, groups_samp) = cache[ind]
             else:
-                print('Running sampling strategy...')
+                print('Running sampling strategy: fit_resample')
                 X_samp, y_samp = sampler.fit_resample(X_train, y_train)
+                print('Running sampling strategy: groups_samp')
                 groups_samp = [groups_train[X_train.tolist().index(row)] for row in X_samp.tolist() ]
                 cache[ind] = (X_samp, y_samp, groups_samp)
 
             print('Model trainning with: X (%s)' % (str(X_samp.shape)))
+
+            X_samp = X_samp.reshape((X_samp.shape[0], 32, 32, 1))
+            print('X_samp reshaped')
+
             gridsearch.fit(X_samp, y_samp, groups=groups_samp)
             print('Model trained with fscore %s, and params %s ' %
                     (str(gridsearch.best_score_), str(gridsearch.best_params_)))
@@ -178,9 +190,14 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 if __name__ == '__main__':
     #assert len(sys.argv) == 4, 'The script requires 3 parameters: feature extractor (browserbite|crosscheck|browserninja1|browserninja2|cnn), type of xbi (internal|external) and sampler strategy (none|tomek|near|repeated|rule|random)'
 
-    extractor_name = 'image_diff_extractor' #sys.argv[1]
-    class_attr = 'internal' #sys.argv[2]
-    sampler_name = 'none' #sys.argv[3]
+    #extractor_name = sys.argv[1] #'image_diff_extractor'
+    #class_attr = sys.argv[2] #'internal'
+    #sampler_name = sys.argv[3] #'none'
+    #n_splits = 24
+
+    extractor_name = 'image_diff_extractor'
+    class_attr = 'internal'
+    sampler_name = 'none'
     n_splits = 24
 
     main(extractor_name, class_attr, sampler_name, n_splits)

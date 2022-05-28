@@ -2,7 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D, BatchNormalization, AvgPool2D
 
 
-def get_params_grid():
+def get_params_grid_cnn():
     # Batch Size: Número de padrões mostrados à rede antes que os pesos sejam atualizados, também define quantos padrões ler por vez e manter na memória
     # Number of Epochs: Número de vezes que o conjunto de dados de treinamento é mostrado à rede durante o treinamento
     batch_size = [1024]  # [10, 20, 40, 60, 80, 100, 1000]
@@ -47,7 +47,7 @@ def get_params_grid():
     return param_grid
 
 
-def model_function():
+def model_function_cnn():
     model = Sequential()
 
     model.add(Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=(32, 32, 1)))
