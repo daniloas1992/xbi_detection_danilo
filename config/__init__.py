@@ -8,7 +8,7 @@ from sklearn.pipeline import Pipeline as Pipe
 from sklearn.preprocessing import StandardScaler
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 
-from classifier.classifier_cnn import get_params_grid, model_function
+from classifier.classifier_cnn import get_params_grid_cnn #, model_function_cnn
 from pipeline.extractor.crosscheck_extractor import CrossCheckExtractor
 from pipeline.extractor.browserbite_extractor import BrowserbiteExtractor
 from pipeline.extractor.browserninja import *
@@ -17,9 +17,13 @@ from pipeline.extractor.browserninja.image_moments_extractor import ImageMoments
 from pipeline.extractor.browserninja.relative_position_extractor import RelativePositionExtractor
 from pipeline.extractor.image_diff_extractor import ImageDiffExtractor
 
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D, BatchNormalization, AvgPool2D
+
+input_shape = None
 
 def get_extractor(name, class_attr):
-    print("[INFO] extractor...")
+    #print("[INFO] extractor...")
     features = []
     max_features = []
     nfeatures=[]
@@ -27,13 +31,13 @@ def get_extractor(name, class_attr):
     extractors = []
 
     if name == 'browserbite':
-        print("[INFO] extractor browserbite...")
+        #print("[INFO] extractor browserbite...")
         extractor = BrowserbiteExtractor(class_attr)
     elif name == 'crosscheck':
-        print("[INFO] extractor crosscheck...")
+        #print("[INFO] extractor crosscheck...")
         extractor = CrossCheckExtractor(class_attr)
     elif name == 'browserninja1':
-        print("[INFO] extractor browserninja1...")
+        #print("[INFO] extractor browserninja1...")
         if (class_attr == 'internal'):
             extractors = [
                     ComplexityExtractor(),
@@ -52,7 +56,7 @@ def get_extractor(name, class_attr):
         extractor = BrowserNinjaCompositeExtractor(class_attr,
             extractors=extractors)
     elif name == 'browserninja2':
-        print("[INFO] extractor browserninja2...")
+        #print("[INFO] extractor browserninja2...")
         max_features = [5, 10, 15]
         nfeatures = [5, 10, 15]
         extractors = []
@@ -89,7 +93,7 @@ def get_extractor(name, class_attr):
         extractor = BrowserNinjaCompositeExtractor(class_attr,
             extractors=extractors)
     elif name == 'image_diff_extractor':
-        print("[INFO] extractor image_diff...")
+        #print("[INFO] extractor image_diff...")
         extractor = ImageDiffExtractor(class_attr)
 
     return (extractor, features, nfeatures, max_features)
@@ -139,12 +143,13 @@ def get_classifier(classifier_name, nfeatures, max_features):
         #cnn = CnnClassifier(32)
 
         model = Pipe([
-            ('preprocessor', StandardScaler()),
+            #('preprocessor', StandardScaler()),
             ('selector', SelectKBest(f_classif)),
-            ('classifier', KerasClassifier(build_fn=model_function(), verbose=1))])
+            ('classifier', KerasClassifier(build_fn=model_function_cnn, verbose=1))])
 
         classifier = GridSearchCV(estimator=model,
-                                  param_grid=get_params_grid(),
+                                  #param_grid=get_params_grid_cnn(),
+                                  param_grid={},
                                   cv=GroupShuffleSplit(n_splits=2, random_state=42),
                                   scoring='f1', error_score=0, verbose=0)
 
@@ -207,4 +212,32 @@ samplers = {
 
 def get_sampler(sampler_name):
     return samplers[sampler_name]
+
+
+def model_function_cnn():
+    model = Sequential()
+
+    global input_shape # (32, 32, 1)
+    image_width = 32
+    image_height = 32
+
+    print("Input shape 3: {}".format(str((input_shape))))
+
+    model.add(Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=(image_width, image_height, 1)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1, activation='sigmoid'))  # Número de saídas do classificador
+
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    # print(model.summary())
+
+    return model
 

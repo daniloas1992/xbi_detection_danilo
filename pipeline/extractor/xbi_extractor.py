@@ -7,7 +7,7 @@ class XBIExtractor():
         self._class_label = class_label
 
     def execute(self, arff_data):
-        print("[INFO] XBIExtractor...")
+        #print("[INFO] XBIExtractor...")
         arff_data['features'] = self._features
         attributes = [ attribute[0]
                 for attribute in arff_data['attributes'] ]

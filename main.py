@@ -39,7 +39,7 @@ else:
     print('Found GPU at: {}'.format(device_name))
 
 def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
-    print("[INFO] main...")
+    #print("[INFO] main...")
     (extractor, features, nfeatures, max_features) = get_extractor(extractor_name, class_attr)
     sampler = get_sampler(sampler_name)
 
@@ -47,7 +47,9 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     extractor_pipeline = Pipeline([ArffLoader(), XBIExtractor(features, class_attr), extractor])
 
-    file_name = '%s/data/danilo/dataset.32x32.%s.arff' % (path, class_attr)
+    #file_name = '%s/data/danilo/dataset.32x32.%s.arff' % (path, class_attr)
+
+    file_name = '/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/data/danilo/dataset.32x32.internal.arff'
 
     #old_file = '%s/data/19112021/dataset.classified.hist.img.%s.arff' % (path, class_attr)
 
@@ -58,15 +60,19 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
     X, y, attributes, features = data['X'], data['y'], [ attr[0] for attr in data['attributes'] ], data['features']
     groups = list(data['data'][:, attributes.index('URL')])
 
-    X = X.reshape((X.shape[0], 32, 32, 1))
-    print('reshape data ...')
-
-    print('data extracted...')
     cv = GroupShuffleSplit(n_splits=n_splits, random_state=42)
 
     cache = {}
 
-    for classifier_name in ['cnn']: #['svm', 'nn', 'dt', 'randomforest']:
+    for classifier_name in ['cnn', 'svm', 'nn', 'dt', 'randomforest']:
+
+        if classifier_name == 'cnn':
+            if extractor_name != 'image_diff_extractor':
+                continue
+
+            X = X.reshape((X.shape[0], 32, 32, 1))
+            print('CNN reshaped data to 32x32...')
+
         rankings, fscore, precision, recall, roc, train_fscore = [], [], [], [], [], []
         approach = '%s-%s-%s' % (extractor_name, classifier_name, class_attr)
         print('running --- %s...' % (approach))
@@ -77,10 +83,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             y_train, y_test = y[train_index], y[test_index]
             groups_train = [i for i in groups if groups.index(i) in train_index]
 
-            input_shape = (X_train.shape[1],)
-            print("Input shape 1: {}".format(str((input_shape))))
-
-            gridsearch = get_classifier(classifier_name, nfeatures, max_features, input_shape)
+            gridsearch = get_classifier(classifier_name, nfeatures, max_features)
 
             if ind in cache:
                 print('Sample recovered from cache...')
@@ -94,12 +97,12 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
             print('Model trainning with: X (%s)' % (str(X_samp.shape)))
 
-            X_samp = X_samp.reshape((X_samp.shape[0], 32, 32, 1))
-            print('X_samp reshaped')
+            #if classifier_name == 'cnn':
+                #X_samp = X_samp.reshape((X_samp.shape[0], 32, 32, 1))
+                #print('CNN: X_samp reshaped')
 
             gridsearch.fit(X_samp, y_samp, groups=groups_samp)
-            print('Model trained with fscore %s, and params %s ' %
-                    (str(gridsearch.best_score_), str(gridsearch.best_params_)))
+            print('Model trained with fscore %s, and params %s ' % (str(gridsearch.best_score_), str(gridsearch.best_params_)))
 
             selector = gridsearch.best_estimator_.named_steps['selector']
             rankings.append(selector.get_support(indices=False))
@@ -190,14 +193,24 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 if __name__ == '__main__':
     #assert len(sys.argv) == 4, 'The script requires 3 parameters: feature extractor (browserbite|crosscheck|browserninja1|browserninja2|cnn), type of xbi (internal|external) and sampler strategy (none|tomek|near|repeated|rule|random)'
 
-    #extractor_name = sys.argv[1] #'image_diff_extractor'
-    #class_attr = sys.argv[2] #'internal'
-    #sampler_name = sys.argv[3] #'none'
+    #extractor_name = sys.argv[1]
+    #class_attr = sys.argv[2]
+    #sampler_name = sys.argv[3]
     #n_splits = 24
 
+    #extractor_name = 'image_diff_extractor'
+    #class_attr = 'internal'
+    #sampler_name = 'none' #'none'
+    #n_splits = 24
+
+    #python3 main.py browserbite external none >> results/browserbite-external.results.txt
+    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
+    sys.stdout = f
     extractor_name = 'image_diff_extractor'
     class_attr = 'internal'
     sampler_name = 'none'
-    n_splits = 24
+    n_splits = 10
 
     main(extractor_name, class_attr, sampler_name, n_splits)
+    sys.out = sys.stdout
+
