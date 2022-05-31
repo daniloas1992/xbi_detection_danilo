@@ -142,14 +142,16 @@ def get_classifier(classifier_name, nfeatures, max_features):
         print('[INFO] CNN classifier...')
         #cnn = CnnClassifier(32)
 
-        model = Pipe([
+        '''model = Pipe([
             #('preprocessor', StandardScaler()),
-            ('selector', SelectKBest(f_classif)),
-            ('classifier', KerasClassifier(build_fn=model_function_cnn, verbose=1))])
+            #('selector', SelectKBest(f_classif)),
+            ('classifier', KerasClassifier(build_fn=model_function_cnn, verbose=1))])'''
+
+        model = KerasClassifier(build_fn=model_function_cnn, verbose=1)
 
         classifier = GridSearchCV(estimator=model,
-                                  #param_grid=get_params_grid_cnn(),
-                                  param_grid={},
+                                  param_grid=get_params_grid_cnn(),
+                                  #param_grid={},
                                   cv=GroupShuffleSplit(n_splits=2, random_state=42),
                                   scoring='f1', error_score=0, verbose=0)
 

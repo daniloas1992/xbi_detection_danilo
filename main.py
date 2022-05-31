@@ -64,7 +64,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     cache = {}
 
-    for classifier_name in ['cnn', 'svm', 'nn', 'dt', 'randomforest']:
+    for classifier_name in ['svm', 'nn', 'dt', 'randomforest', 'cnn']:
 
         if classifier_name == 'cnn':
             if extractor_name != 'image_diff_extractor':
@@ -85,7 +85,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
             gridsearch = get_classifier(classifier_name, nfeatures, max_features)
 
-            if ind in cache:
+            '''if ind in cache:
                 print('Sample recovered from cache...')
                 (X_samp, y_samp, groups_samp) = cache[ind]
             else:
@@ -93,7 +93,9 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
                 X_samp, y_samp = sampler.fit_resample(X_train, y_train)
                 print('Running sampling strategy: groups_samp')
                 groups_samp = [groups_train[X_train.tolist().index(row)] for row in X_samp.tolist() ]
-                cache[ind] = (X_samp, y_samp, groups_samp)
+                cache[ind] = (X_samp, y_samp, groups_samp)'''
+
+            X_samp, y_samp, groups_samp = X_train, y_train, groups_train
 
             print('Model trainning with: X (%s)' % (str(X_samp.shape)))
 
@@ -104,8 +106,8 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             gridsearch.fit(X_samp, y_samp, groups=groups_samp)
             print('Model trained with fscore %s, and params %s ' % (str(gridsearch.best_score_), str(gridsearch.best_params_)))
 
-            selector = gridsearch.best_estimator_.named_steps['selector']
-            rankings.append(selector.get_support(indices=False))
+            #selector = gridsearch.best_estimator_.named_steps['selector']
+            #rankings.append(selector.get_support(indices=False))
 
             if (classifier_name == 'svm'):
                 model = CalibratedClassifierCV(gridsearch.best_estimator_)
@@ -115,7 +117,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
             y_pred = model.predict_proba(X_train)
             probability = y_pred[:, list(
-                gridsearch.best_estimator_.named_steps['classifier'].classes_).index(1)]
+                gridsearch.best_estimator_.classes_).index(1)]
 
             precision2, recall2, threasholds = metrics.precision_recall_curve(
                     y_train, probability)
@@ -132,7 +134,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             train_fscore.append(metrics.f1_score(y_train, [ 0 if prob < threshold else 1 for prob in probability]))
             y_pred = model.predict_proba(X_test)
             probability = y_pred[:, list(
-                gridsearch.best_estimator_.named_steps['classifier'].classes_).index(1)]
+                gridsearch.best_estimator_.classes_).index(1)]
 
             y_threashold = [ 0 if y < threshold else 1 for y in probability]
             print('Model tested with F-Score: %f' % (metrics.f1_score(y_test, y_threashold)))
@@ -181,13 +183,13 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
         features_len = features_csv.shape[1]
         print(features)
         print(features_len)
-        print(rankings)
+        #print(rankings)
 
-        if extractor_name == 'browserninja2':
+        '''if extractor_name == 'browserninja2':
             for i in range(len(rankings)):
                 features_csv.loc[
                         '%s-%d' % (classifier_name, (i + features_len)), :] = rankings[i]
-            features_csv.to_csv('results/features-%s.csv' % (class_attr))
+            features_csv.to_csv('results/features-%s.csv' % (class_attr))'''
 
 
 if __name__ == '__main__':
@@ -204,13 +206,13 @@ if __name__ == '__main__':
     #n_splits = 24
 
     #python3 main.py browserbite external none >> results/browserbite-external.results.txt
-    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
-    sys.stdout = f
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
+    #sys.stdout = f
     extractor_name = 'image_diff_extractor'
     class_attr = 'internal'
     sampler_name = 'none'
     n_splits = 10
 
     main(extractor_name, class_attr, sampler_name, n_splits)
-    sys.out = sys.stdout
+    #sys.out = sys.stdout
 

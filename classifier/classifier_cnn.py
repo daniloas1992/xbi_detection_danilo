@@ -6,7 +6,7 @@ def get_params_grid_cnn():
     # Batch Size: Número de padrões mostrados à rede antes que os pesos sejam atualizados, também define quantos padrões ler por vez e manter na memória
     # Number of Epochs: Número de vezes que o conjunto de dados de treinamento é mostrado à rede durante o treinamento
     batch_size = [1024]  # [10, 20, 40, 60, 80, 100, 1000]
-    epochs = [10, 20, 50]
+    epochs = [10000]#[10, 20, 50]
 
     # Training Optimization: Algoritmos de otimização de treinamento disponibilizados pelo Keras
     optimizer = ['Adam']  # ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']
