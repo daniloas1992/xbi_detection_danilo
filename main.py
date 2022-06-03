@@ -64,7 +64,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     cache = {}
 
-    for classifier_name in ['svm', 'nn', 'dt', 'randomforest', 'cnn']:
+    for classifier_name in ['cnn']: #['svm', 'nn', 'dt', 'randomforest', 'cnn']:
 
         if classifier_name == 'cnn':
             if extractor_name != 'image_diff_extractor':
@@ -206,13 +206,13 @@ if __name__ == '__main__':
     #n_splits = 24
 
     #python3 main.py browserbite external none >> results/browserbite-external.results.txt
-    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
-    #sys.stdout = f
+    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
+    sys.stdout = f
     extractor_name = 'image_diff_extractor'
     class_attr = 'internal'
     sampler_name = 'none'
     n_splits = 10
 
     main(extractor_name, class_attr, sampler_name, n_splits)
-    #sys.out = sys.stdout
+    sys.out = sys.stdout
 

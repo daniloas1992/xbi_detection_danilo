@@ -8,7 +8,7 @@ from sklearn.pipeline import Pipeline as Pipe
 from sklearn.preprocessing import StandardScaler
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 
-from classifier.classifier_cnn import get_params_grid_cnn #, model_function_cnn
+from classifier.classifier_cnn import get_params_grid_cnn, model_function_cnn
 from pipeline.extractor.crosscheck_extractor import CrossCheckExtractor
 from pipeline.extractor.browserbite_extractor import BrowserbiteExtractor
 from pipeline.extractor.browserninja import *
@@ -147,11 +147,11 @@ def get_classifier(classifier_name, nfeatures, max_features):
             #('selector', SelectKBest(f_classif)),
             ('classifier', KerasClassifier(build_fn=model_function_cnn, verbose=1))])'''
 
-        model = KerasClassifier(build_fn=model_function_cnn, verbose=1)
+        #model = KerasClassifier(build_fn=model_function_cnn, verbose=1)
+        model = KerasClassifier(build_fn=model_function_cnn, verbose=0)
 
         classifier = GridSearchCV(estimator=model,
                                   param_grid=get_params_grid_cnn(),
-                                  #param_grid={},
                                   cv=GroupShuffleSplit(n_splits=2, random_state=42),
                                   scoring='f1', error_score=0, verbose=0)
 
@@ -216,15 +216,13 @@ def get_sampler(sampler_name):
     return samplers[sampler_name]
 
 
-def model_function_cnn():
+'''def model_function_cnn(neurons = 1):
     model = Sequential()
 
-    global input_shape # (32, 32, 1)
     image_width = 32
     image_height = 32
 
-    print("Input shape 3: {}".format(str((input_shape))))
-
+    model.add(Dense(neurons, activation='relu'))
     model.add(Conv2D(16, (3, 3), activation='relu', padding='same', input_shape=(image_width, image_height, 1)))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
@@ -241,5 +239,5 @@ def model_function_cnn():
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # print(model.summary())
 
-    return model
+    return model'''
 
