@@ -51,8 +51,6 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     file_name = '/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/data/danilo/dataset.32x32.internal.arff'
 
-    #old_file = '%s/data/19112021/dataset.classified.hist.img.%s.arff' % (path, class_attr)
-
     print('[INFO] dataset: %s ' % file_name)
 
     data = extractor_pipeline.execute(open(file_name).read())
@@ -64,7 +62,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     cache = {}
 
-    for classifier_name in ['cnn']: #['svm', 'nn', 'dt', 'randomforest', 'cnn']:
+    for classifier_name in ['svm', 'nn', 'dt', 'randomforest', 'cnn']:  # in ['cnn']:
 
         if classifier_name == 'cnn':
             if extractor_name != 'image_diff_extractor':
@@ -98,10 +96,6 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             X_samp, y_samp, groups_samp = X_train, y_train, groups_train
 
             print('Model trainning with: X (%s)' % (str(X_samp.shape)))
-
-            #if classifier_name == 'cnn':
-                #X_samp = X_samp.reshape((X_samp.shape[0], 32, 32, 1))
-                #print('CNN: X_samp reshaped')
 
             gridsearch.fit(X_samp, y_samp, groups=groups_samp)
             print('Model trained with fscore %s, and params %s ' % (str(gridsearch.best_score_), str(gridsearch.best_params_)))
@@ -194,25 +188,35 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
 if __name__ == '__main__':
     #assert len(sys.argv) == 4, 'The script requires 3 parameters: feature extractor (browserbite|crosscheck|browserninja1|browserninja2|cnn), type of xbi (internal|external) and sampler strategy (none|tomek|near|repeated|rule|random)'
-
     #extractor_name = sys.argv[1]
     #class_attr = sys.argv[2]
     #sampler_name = sys.argv[3]
     #n_splits = 24
 
-    #extractor_name = 'image_diff_extractor'
-    #class_attr = 'internal'
-    #sampler_name = 'none' #'none'
-    #n_splits = 24
+    #  ===== Browserbite  =====
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserbite-internal.results.txt', 'w')
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserbite-external.results.txt', 'w')
+    #extractor_name = 'browserbite'
 
-    #python3 main.py browserbite external none >> results/browserbite-external.results.txt
-    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
-    sys.stdout = f
-    extractor_name = 'image_diff_extractor'
-    class_attr = 'internal'
+    #  ===== CrossCheck  =====
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/crosscheck-internal.results.txt', 'w')
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/crosscheck-external.results.txt', 'w')
+    #extractor_name = 'crosscheck'
+
+    #  ===== BrowserNinja 1  =====
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserninja1-internal.results.txt', 'w')
+    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserninja1-external.results.txt', 'w')
+    extractor_name = 'browserninja1'
+
+    #  ===== CNN  =====
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
+    # f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-external.results.txt', 'w')
+    #extractor_name = 'image_diff_extractor'
+
+    class_attr = 'external'
     sampler_name = 'none'
     n_splits = 10
-
+    sys.stdout = f
     main(extractor_name, class_attr, sampler_name, n_splits)
     sys.out = sys.stdout
 
