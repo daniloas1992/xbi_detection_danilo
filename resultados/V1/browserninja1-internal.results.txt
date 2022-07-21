@@ -1,0 +1,207 @@
+running --- browserninja1-internal...
+[INFO] dataset: /home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/data/danilo/dataset.32x32.internal.arff 
+[INFO] ArffLoader...
+running --- browserninja1-svm-internal...
+Model trainning with: X ((6686, 13))
+Model trained with fscore 0.3738343203321762, and params {'classifier__C': 100, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.512535
+Model tested with F-Score: 0.476190
+Model trainning with: X ((7401, 13))
+Model trained with fscore 0.28043912175648705, and params {'classifier__C': 10, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.462151
+Model tested with F-Score: 0.571429
+Model trainning with: X ((6770, 13))
+Model trained with fscore 0.4271739130434782, and params {'classifier__C': 100, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.587896
+Model tested with F-Score: 0.372414
+Model trainning with: X ((7476, 13))
+Model trained with fscore 0.3497366757952391, and params {'classifier__C': 1, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.452830
+Model tested with F-Score: 0.542857
+Model trainning with: X ((7578, 13))
+Model trained with fscore 0.235, and params {'classifier__C': 1, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.486486
+Model tested with F-Score: 0.425000
+Model trainning with: X ((5640, 13))
+Model trained with fscore 0.27583364004416633, and params {'classifier__C': 100, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 0.1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.485050
+Model tested with F-Score: 0.500000
+Model trainning with: X ((7157, 13))
+Model trained with fscore 0.38834908963585435, and params {'classifier__C': 10, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 0.1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.521531
+Model tested with F-Score: 0.344828
+Model trainning with: X ((6432, 13))
+Model trained with fscore 0.26354671569446764, and params {'classifier__C': 1, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.430769
+Model tested with F-Score: 0.372881
+Model trainning with: X ((6727, 13))
+Model trained with fscore 0.2915249433106576, and params {'classifier__C': 10, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 0.1, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.490358
+Model tested with F-Score: 0.426667
+Model trainning with: X ((5763, 13))
+Model trained with fscore 0.38772314437832756, and params {'classifier__C': 100, 'classifier__class_weight': 'balanced', 'classifier__dual': False, 'classifier__max_iter': 10000, 'classifier__tol': 0.001, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.494318
+Model tested with F-Score: 0.475000
+Features: ['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+X dimensions:(8388, 13)
+Test     ROC: 0.755121
+Test      F1: 0.450727
+Test      F1: [0.4761904761904762, 0.5714285714285715, 0.37241379310344824, 0.5428571428571429, 0.425, 0.5, 0.3448275862068966, 0.3728813559322034, 0.4266666666666667, 0.47500000000000003]
+Train     F1: [0.5125348189415042, 0.4621513944223108, 0.5878962536023056, 0.4528301886792453, 0.4864864864864865, 0.48504983388704326, 0.521531100478469, 0.43076923076923074, 0.49035812672176304, 0.4943181818181818]
+Test      Precision: [0.5084745762711864, 0.6086956521739131, 0.2727272727272727, 0.4523809523809524, 0.5, 0.5057471264367817, 0.21739130434782608, 0.3055555555555556, 0.42105263157894735, 0.4418604651162791]
+Test      Recall: [0.44776119402985076, 0.5384615384615384, 0.5869565217391305, 0.6785714285714286, 0.3695652173913043, 0.4943820224719101, 0.8333333333333334, 0.4782608695652174, 0.43243243243243246, 0.5135135135135135]
+['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+13
+running --- browserninja1-nn-internal...
+Model trainning with: X ((6686, 13))
+Model trained with fscore 0.634703196347032, and params {'classifier__activation': 'relu', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 20, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.679612
+Model tested with F-Score: 0.610169
+Model trainning with: X ((7401, 13))
+Model trained with fscore 0.47272727272727266, and params {'classifier__activation': 'tanh', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 20, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.637838
+Model tested with F-Score: 0.625000
+Model trainning with: X ((6770, 13))
+Model trained with fscore 0.5624538063562454, and params {'classifier__activation': 'relu', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 30, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.670270
+Model tested with F-Score: 0.505051
+Model trainning with: X ((7476, 13))
+Model trained with fscore 0.5062929061784897, and params {'classifier__activation': 'relu', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 30, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.681319
+Model tested with F-Score: 0.618182
+Model trainning with: X ((7578, 13))
+Model trained with fscore 0.452991452991453, and params {'classifier__activation': 'tanh', 'classifier__alpha': 0.01, 'classifier__hidden_layer_sizes': 20, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.677019
+Model tested with F-Score: 0.441176
+Model trainning with: X ((5640, 13))
+Model trained with fscore 0.5264069264069264, and params {'classifier__activation': 'relu', 'classifier__alpha': 0.01, 'classifier__hidden_layer_sizes': 20, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.679842
+Model tested with F-Score: 0.586667
+Model trainning with: X ((7157, 13))
+Model trained with fscore 0.4658712541620422, and params {'classifier__activation': 'relu', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 10, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.605187
+Model tested with F-Score: 0.350000
+Model trainning with: X ((6432, 13))
+Model trained with fscore 0.47054597701149425, and params {'classifier__activation': 'relu', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 10, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.636364
+Model tested with F-Score: 0.487179
+Model trainning with: X ((6727, 13))
+Model trained with fscore 0.5289103039288362, and params {'classifier__activation': 'tanh', 'classifier__alpha': 0.01, 'classifier__hidden_layer_sizes': 20, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.664789
+Model tested with F-Score: 0.470588
+Model trainning with: X ((5763, 13))
+Model trained with fscore 0.5576974564926371, and params {'classifier__activation': 'tanh', 'classifier__alpha': 0.0001, 'classifier__hidden_layer_sizes': 20, 'classifier__max_iter': 10000, 'classifier__random_state': 42, 'classifier__solver': 'adam', 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.655844
+Model tested with F-Score: 0.616438
+Features: ['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+X dimensions:(8388, 13)
+Test     ROC: 0.754685
+Test      F1: 0.531045
+Test      F1: [0.6101694915254238, 0.6249999999999999, 0.5050505050505051, 0.6181818181818182, 0.4411764705882353, 0.5866666666666667, 0.35, 0.4871794871794871, 0.47058823529411764, 0.6164383561643835]
+Train     F1: [0.6796116504854369, 0.6378378378378379, 0.6702702702702702, 0.6813186813186813, 0.6770186335403727, 0.6798418972332015, 0.6051873198847262, 0.6363636363636364, 0.6647887323943662, 0.6558441558441559]
+Test      Precision: [0.7058823529411765, 0.6818181818181818, 0.4716981132075472, 0.6296296296296297, 0.6818181818181818, 0.7213114754098361, 0.23333333333333334, 0.59375, 0.5161290322580645, 0.625]
+Test      Recall: [0.5373134328358209, 0.5769230769230769, 0.5434782608695652, 0.6071428571428571, 0.32608695652173914, 0.4943820224719101, 0.7, 0.41304347826086957, 0.43243243243243246, 0.6081081081081081]
+['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+13
+running --- browserninja1-dt-internal...
+Model trainning with: X ((6686, 13))
+Model trained with fscore 0.5887700534759358, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.813187
+Model tested with F-Score: 0.409091
+Model trainning with: X ((7401, 13))
+Model trained with fscore 0.4131019036954087, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 6, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.762749
+Model tested with F-Score: 0.294118
+Model trainning with: X ((6770, 13))
+Model trained with fscore 0.5284775465498357, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.810526
+Model tested with F-Score: 0.459770
+Model trainning with: X ((7476, 13))
+Model trained with fscore 0.50977506832037, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 6, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.793103
+Model tested with F-Score: 0.409639
+Model trainning with: X ((7578, 13))
+Model trained with fscore 0.3534412955465587, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 6, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.882051
+Model tested with F-Score: 0.454545
+Model trainning with: X ((5640, 13))
+Model trained with fscore 0.47374847374847373, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.770149
+Model tested with F-Score: 0.468085
+Model trainning with: X ((7157, 13))
+Model trained with fscore 0.42143085276269565, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 10, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.714286
+Model tested with F-Score: 0.409639
+Model trainning with: X ((6432, 13))
+Model trained with fscore 0.4548494983277592, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 6, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.830380
+Model tested with F-Score: 0.342857
+Model trainning with: X ((6727, 13))
+Model trained with fscore 0.5333333333333333, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.847619
+Model tested with F-Score: 0.426966
+Model trainning with: X ((5763, 13))
+Model trained with fscore 0.5366541353383458, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 6, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.871345
+Model tested with F-Score: 0.625767
+Features: ['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+X dimensions:(8388, 13)
+Test     ROC: 0.733517
+Test      F1: 0.430048
+Test      F1: [0.4090909090909091, 0.2941176470588235, 0.45977011494252873, 0.40963855421686746, 0.4545454545454545, 0.4680851063829787, 0.40963855421686746, 0.3428571428571429, 0.42696629213483145, 0.6257668711656441]
+Train     F1: [0.8131868131868132, 0.7627494456762749, 0.8105263157894738, 0.7931034482758621, 0.882051282051282, 0.7701492537313432, 0.7142857142857143, 0.830379746835443, 0.8476190476190476, 0.8713450292397661]
+Test      Precision: [0.4153846153846154, 0.23809523809523808, 0.4878048780487805, 0.3090909090909091, 0.47619047619047616, 0.4444444444444444, 0.32075471698113206, 0.3050847457627119, 0.36538461538461536, 0.5730337078651685]
+Test      Recall: [0.40298507462686567, 0.38461538461538464, 0.43478260869565216, 0.6071428571428571, 0.43478260869565216, 0.4943820224719101, 0.5666666666666667, 0.391304347826087, 0.5135135135135135, 0.6891891891891891]
+['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+13
+running --- browserninja1-randomforest-internal...
+Model trainning with: X ((6686, 13))
+Model trained with fscore 0.7190325497287522, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 6, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.959770
+Model tested with F-Score: 0.584906
+Model trainning with: X ((7401, 13))
+Model trained with fscore 0.5880052151238593, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 10, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.955916
+Model tested with F-Score: 0.595745
+Model trainning with: X ((6770, 13))
+Model trained with fscore 0.6313950237629298, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 10, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 10, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.913151
+Model tested with F-Score: 0.705882
+Model trainning with: X ((7476, 13))
+Model trained with fscore 0.5595238095238095, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 10, 'classifier__n_estimators': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.938776
+Model tested with F-Score: 0.542373
+Model trainning with: X ((7578, 13))
+Model trained with fscore 0.49999999999999994, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 6, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.960396
+Model tested with F-Score: 0.484848
+Model trainning with: X ((5640, 13))
+Model trained with fscore 0.6203703703703705, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 10, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 10, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.943894
+Model tested with F-Score: 0.657143
+Model trainning with: X ((7157, 13))
+Model trained with fscore 0.5508291276135544, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 6, 'classifier__n_estimators': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.950119
+Model tested with F-Score: 0.786885
+Model trainning with: X ((6432, 13))
+Model trained with fscore 0.5382543103448276, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 6, 'classifier__n_estimators': 10, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.917949
+Model tested with F-Score: 0.613333
+Model trainning with: X ((6727, 13))
+Model trained with fscore 0.6135869565217391, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'entropy', 'classifier__max_depth': 10, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 5, 'classifier__min_samples_split': 6, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.889423
+Model tested with F-Score: 0.463768
+Model trainning with: X ((5763, 13))
+Model trained with fscore 0.6290491118077326, and params {'classifier__class_weight': 'balanced', 'classifier__criterion': 'gini', 'classifier__max_depth': 20, 'classifier__max_features': 'auto', 'classifier__min_samples_leaf': 3, 'classifier__min_samples_split': 6, 'classifier__n_estimators': 20, 'selector__k': 'all', 'selector__score_func': <function f_classif at 0x7f12d31c1050>} 
+Model training F-Score with selected threshold: 0.962099
+Model tested with F-Score: 0.666667
+Features: ['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+X dimensions:(8388, 13)
+Test     ROC: 0.769417
+Test      F1: 0.610155
+Test      F1: [0.5849056603773585, 0.5957446808510638, 0.7058823529411764, 0.5423728813559322, 0.48484848484848486, 0.6571428571428573, 0.7868852459016393, 0.6133333333333334, 0.463768115942029, 0.6666666666666666]
+Train     F1: [0.9597701149425287, 0.9559164733178654, 0.913151364764268, 0.9387755102040817, 0.9603960396039604, 0.9438943894389439, 0.9501187648456056, 0.9179487179487179, 0.8894230769230769, 0.9620991253644314]
+Test      Precision: [0.7948717948717948, 0.6666666666666666, 0.7692307692307693, 0.5161290322580645, 0.8, 0.9019607843137255, 0.7741935483870968, 0.7931034482758621, 0.5, 0.7014925373134329]
+Test      Recall: [0.4626865671641791, 0.5384615384615384, 0.6521739130434783, 0.5714285714285714, 0.34782608695652173, 0.5168539325842697, 0.8, 0.5, 0.43243243243243246, 0.6351351351351351]
+['childsNumber', 'textLength', 'area', 'phash', 'chiSquared', 'imageDiff', 'width_comp', 'height_comp', 'left_visibility', 'right_visibility', 'left_comp', 'right_comp', 'y_comp']
+13

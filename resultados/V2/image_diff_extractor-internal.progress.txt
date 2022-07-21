@@ -1,0 +1,97 @@
+
+DateTime: 2022-07-11 20:34:55.053494 
+running --- image_diff_extractor-internal...
+[INFO] dataset: /home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/data/danilo/dataset.32x32.internal.arff 
+DateTime: 2022-07-11 20:35:10.955665 
+CNN reshaped data to 32x32...
+running --- image_diff_extractor-cnn-internal...
+DateTime: 2022-07-11 20:35:10.961525 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((6686, 32, 32, 1))
+DateTime: 2022-07-12 00:54:38.041664 
+Model trainning with: X ((6686, 32, 32, 1))
+DateTime: 2022-07-12 00:54:38.275361 
+Model training F-Score
+DateTime: 2022-07-12 00:54:38.522417 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-12 00:54:38.522771 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((7401, 32, 32, 1))
+DateTime: 2022-07-12 05:38:24.141072 
+Model trainning with: X ((7401, 32, 32, 1))
+DateTime: 2022-07-12 05:38:24.322994 
+Model training F-Score
+DateTime: 2022-07-12 05:38:24.517565 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-12 05:38:24.518042 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((6770, 32, 32, 1))
+DateTime: 2022-07-12 10:06:46.439184 
+Model trainning with: X ((6770, 32, 32, 1))
+DateTime: 2022-07-12 10:06:46.661135 
+Model training F-Score
+DateTime: 2022-07-12 10:06:46.892083 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-12 10:06:46.892423 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((7476, 32, 32, 1))
+DateTime: 2022-07-12 14:54:48.128767 
+Model trainning with: X ((7476, 32, 32, 1))
+DateTime: 2022-07-12 14:54:48.315004 
+Model training F-Score
+DateTime: 2022-07-12 14:54:48.500667 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-12 14:54:48.501014 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((7578, 32, 32, 1))
+DateTime: 2022-07-12 19:48:17.415991 
+Model trainning with: X ((7578, 32, 32, 1))
+DateTime: 2022-07-12 19:48:17.646870 
+Model training F-Score
+DateTime: 2022-07-12 19:48:17.910601 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-12 19:48:17.910955 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((5640, 32, 32, 1))
+DateTime: 2022-07-12 23:02:05.588439 
+Model trainning with: X ((5640, 32, 32, 1))
+DateTime: 2022-07-12 23:02:05.746454 
+Model training F-Score
+DateTime: 2022-07-12 23:02:05.931759 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-12 23:02:05.932092 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((7157, 32, 32, 1))
+DateTime: 2022-07-13 03:39:13.281646 
+Model trainning with: X ((7157, 32, 32, 1))
+DateTime: 2022-07-13 03:39:13.457181 
+Model training F-Score
+DateTime: 2022-07-13 03:39:13.571178 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-13 03:39:13.571517 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((6432, 32, 32, 1))
+DateTime: 2022-07-13 07:40:57.003000 
+Model trainning with: X ((6432, 32, 32, 1))
+DateTime: 2022-07-13 07:40:57.211748 
+Model training F-Score
+DateTime: 2022-07-13 07:40:57.527737 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-13 07:40:57.528082 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((6727, 32, 32, 1))
+DateTime: 2022-07-13 11:56:35.161071 
+Model trainning with: X ((6727, 32, 32, 1))
+DateTime: 2022-07-13 11:56:35.330101 
+Model training F-Score
+DateTime: 2022-07-13 11:56:35.496172 
+ ----------- FINISH STEP --------------
+DateTime: 2022-07-13 11:56:35.496563 
+Crossvalidation --- image_diff_extractor-cnn-internal...
+Model trainning with: X ((5763, 32, 32, 1))
+DateTime: 2022-07-13 15:38:58.998774 
+Model trainning with: X ((5763, 32, 32, 1))
+DateTime: 2022-07-13 15:38:59.160872 
+Model training F-Score
+DateTime: 2022-07-13 15:38:59.334582 
+ ----------- FINISH STEP --------------

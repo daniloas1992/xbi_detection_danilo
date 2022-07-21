@@ -5,6 +5,7 @@ from sklearn.calibration import CalibratedClassifierCV
 from sklearn.model_selection import GroupShuffleSplit
 import tensorflow as tf
 from functools import reduce
+from datetime import datetime
 
 from config import get_extractor, get_classifier, get_sampler
 from pipeline import Pipeline
@@ -38,10 +39,19 @@ if device_name != '/device:GPU:0':
 else:
     print('Found GPU at: {}'.format(device_name))
 
+
+def getDateTime():
+    return '\nDateTime: %s ' % (str(datetime.now()))
+
+
 def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
     #print("[INFO] main...")
     (extractor, features, nfeatures, max_features) = get_extractor(extractor_name, class_attr)
     sampler = get_sampler(sampler_name)
+
+    with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+        wf.write(getDateTime())
+        wf.write('\nrunning --- %s-%s...' % (extractor_name, class_attr))
 
     print('running --- %s-%s...' % (extractor_name, class_attr))
 
@@ -52,6 +62,8 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
     file_name = '/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/data/danilo/dataset.32x32.internal.arff'
 
     print('[INFO] dataset: %s ' % file_name)
+    with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+        wf.write('\n[INFO] dataset: %s ' % file_name)
 
     data = extractor_pipeline.execute(open(file_name).read())
 
@@ -62,7 +74,7 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
     cache = {}
 
-    for classifier_name in ['svm', 'nn', 'dt', 'randomforest', 'cnn']:  # in ['cnn']:
+    for classifier_name in ['cnn']:  # in ['svm', 'nn', 'dt', 'randomforest', 'cnn']:  # in ['cnn']:
 
         if classifier_name == 'cnn':
             if extractor_name != 'image_diff_extractor':
@@ -70,13 +82,22 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
             X = X.reshape((X.shape[0], 32, 32, 1))
             print('CNN reshaped data to 32x32...')
+            with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+                wf.write(getDateTime())
+                wf.write('\nCNN reshaped data to 32x32...')
 
         rankings, fscore, precision, recall, roc, train_fscore = [], [], [], [], [], []
         approach = '%s-%s-%s' % (extractor_name, classifier_name, class_attr)
         print('running --- %s...' % (approach))
+        with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+            wf.write('\nrunning --- %s...' % (approach))
         #gridsearch = get_classifier(classifier_name, nfeatures, max_features)
 
         for ind, (train_index, test_index) in enumerate(cv.split(X, y, groups)):
+            with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+                wf.write(getDateTime())
+                wf.write('\nCrossvalidation --- %s...' % (approach))
+
             X_train, X_test = X[train_index], X[test_index]
             y_train, y_test = y[train_index], y[test_index]
             groups_train = [i for i in groups if groups.index(i) in train_index]
@@ -96,9 +117,14 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             X_samp, y_samp, groups_samp = X_train, y_train, groups_train
 
             print('Model trainning with: X (%s)' % (str(X_samp.shape)))
+            with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+                wf.write('\nModel trainning with: X (%s)' % (str(X_samp.shape)))
 
             gridsearch.fit(X_samp, y_samp, groups=groups_samp)
             print('Model trained with fscore %s, and params %s ' % (str(gridsearch.best_score_), str(gridsearch.best_params_)))
+            with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+                wf.write(getDateTime())
+                wf.write('\nModel trainning with: X (%s)' % (str(X_samp.shape)))
 
             #selector = gridsearch.best_estimator_.named_steps['selector']
             #rankings.append(selector.get_support(indices=False))
@@ -125,6 +151,10 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
 
             print('Model training F-Score with selected threshold: %f' % (metrics.f1_score(y_train, [ 0 if prob < threshold else 1 for prob in probability])))
 
+            with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+                wf.write(getDateTime())
+                wf.write('\nModel training F-Score')
+
             train_fscore.append(metrics.f1_score(y_train, [ 0 if prob < threshold else 1 for prob in probability]))
             y_pred = model.predict_proba(X_test)
             probability = y_pred[:, list(
@@ -137,6 +167,9 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             recall.append(metrics.recall_score(y_test, y_threashold))
             roc.append(metrics.roc_auc_score(y_test, y_threashold))
 
+            with open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.progress.txt', 'a') as wf:
+                wf.write(getDateTime())
+                wf.write('\n ----------- FINISH STEP --------------')
 
         print('Features: ' + str(features))
         print('X dimensions:' + str(X.shape))
@@ -175,9 +208,6 @@ def main(extractor_name, class_attr, sampler_name, n_splits, path='.'):
             features_csv = pd.DataFrame(columns=features)
 
         features_len = features_csv.shape[1]
-        print(features)
-        print(features_len)
-        #print(rankings)
 
         '''if extractor_name == 'browserninja2':
             for i in range(len(rankings)):
@@ -205,15 +235,15 @@ if __name__ == '__main__':
 
     #  ===== BrowserNinja 1  =====
     #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserninja1-internal.results.txt', 'w')
-    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserninja1-external.results.txt', 'w')
-    extractor_name = 'browserninja1'
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/browserninja1-external.results.txt', 'w')
+    #extractor_name = 'browserninja1'
 
     #  ===== CNN  =====
-    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
-    # f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-external.results.txt', 'w')
-    #extractor_name = 'image_diff_extractor'
+    f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-internal.results.txt', 'w')
+    #f = open('/home/danilo/Mestrado/JANEIRO_2022/xbi-detection-V2/xbi-detection/results/image_diff_extractor-external.results.txt', 'w')
+    extractor_name = 'image_diff_extractor'
 
-    class_attr = 'external'
+    class_attr = 'internal'
     sampler_name = 'none'
     n_splits = 10
     sys.stdout = f

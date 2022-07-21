@@ -8,7 +8,7 @@ from sklearn.pipeline import Pipeline as Pipe
 from sklearn.preprocessing import StandardScaler
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 
-from classifier.classifier_cnn import get_params_grid_cnn, model_function_cnn
+from classifier.classifier_cnn import get_params_grid_cnn, model_function_cnn, model_function_cnn_2
 from pipeline.extractor.crosscheck_extractor import CrossCheckExtractor
 from pipeline.extractor.browserbite_extractor import BrowserbiteExtractor
 from pipeline.extractor.browserninja import *
@@ -148,7 +148,7 @@ def get_classifier(classifier_name, nfeatures, max_features):
             ('classifier', KerasClassifier(build_fn=model_function_cnn, verbose=1))])'''
 
         #model = KerasClassifier(build_fn=model_function_cnn, verbose=1)
-        model = KerasClassifier(build_fn=model_function_cnn, verbose=0)
+        model = KerasClassifier(build_fn=model_function_cnn_2, verbose=0)
 
         classifier = GridSearchCV(estimator=model,
                                   param_grid=get_params_grid_cnn(),

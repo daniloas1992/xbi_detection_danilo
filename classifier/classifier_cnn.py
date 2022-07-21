@@ -74,3 +74,79 @@ def model_function_cnn(activation='relu', init_mode='uniform', neurons=1, dropou
     # print(model.summary())
 
     return model
+
+
+def model_function_cnn_2(activation='relu', init_mode='uniform', neurons=1, dropout_rate=0.0, weight_constraint=0, learn_rate=0.01, momentum=0):
+    model = Sequential()
+
+    #model.add(Dense(neurons, activation='relu'))
+    #model.add(Dense(neurons, activation='relu', kernel_constraint=max_norm(weight_constraint)))
+    model.add(Dense(neurons, activation=activation, kernel_initializer=init_mode, kernel_constraint=max_norm(weight_constraint)))
+
+    model.add(Conv2D(16, (5, 5), activation='relu', padding='same', input_shape=(32, 32, 1)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(32, (4, 4), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(64, (1, 1), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    model.add(Conv2D(32, (1, 1), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+    # model.add(Dropout(0.25))
+    model.add(Dropout(dropout_rate))
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1, activation='sigmoid'))  # Número de saídas do classificador
+
+    optimizer = SGD(lr=learn_rate, momentum=momentum)
+    #model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+    # print(model.summary())
+
+    return model
+
+
+def model_AlexNet():
+    # AlexNet expects input shape 227x227
+
+    model = Sequential()
+
+    model.add(Conv2D(filters=96, kernel_size=(11, 11), strides=(4, 4), activation='relu', input_shape=(227, 227, 3)))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+
+    model.add(Conv2D(filters=256, kernel_size=(5, 5), strides=(1, 1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+
+    model.add(Conv2D(filters=384, kernel_size=(3, 3), strides=(1, 1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+
+    model.add(Conv2D(filters=384, kernel_size=(1, 1), strides=(1, 1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+
+    model.add(Conv2D(filters=256, kernel_size=(1, 1), strides=(1, 1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+
+    model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+
+    model.add(Flatten())
+
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+
+    model.add(Dense(1, activation='softmax'))
+
+    model.compile(optimizer=SGD(0.001), loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+    print(model.summary())
+    return model
